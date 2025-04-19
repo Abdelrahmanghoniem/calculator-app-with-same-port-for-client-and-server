@@ -1,0 +1,68 @@
+{
+  "name": "calculator-app",
+  "version": "1.0.0",
+  "main": "build.js",
+  "scripts": {
+"dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",    "dev:server": "cd server && node index.js",
+    "dev:client": "cd client && npm run dev",
+    "dev:nginx": "nginx -c $(pwd)/nginx/nginx.conf",
+    "build": "concurrently \"npm run build:client\" \"npm run build:server\"",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm install --production",
+    "start": "node server/index.js",
+    "package": "electron-builder",
+    "electron": "electron .",
+    "clean": "if exist dist rd /s /q dist && if exist node_modules\\.cache rd /s /q node_modules\\.cache && if exist \"%LOCALAPPDATA%\\electron-builder\" rd /s /q \"%LOCALAPPDATA%\\electron-builder\"",
+    "prebuild": "npm run clean || exit 0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "electron": "^25.3.0",
+    "electron-builder": "^24.4.0",
+    "wait-on": "^7.0.1"
+  },
+  "build": {
+  "appId": "com.example.calculator",
+  "productName": "Calculator App",
+  "directories": {
+    "output": "dist"
+  },
+  "files": [
+    "build.js",
+    "client/dist/**/*",
+    "server/**/*",
+    "nginx/**/*",
+    "node_modules/**/*"
+  ],
+  "win": {
+    "target": "nsis",
+    "icon": "assets/icon.ico"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  },
+  "electronDownload": {
+    "mirror": "https://npmmirror.com/mirrors/electron/"
+  },
+  "extraResources": [
+    {
+      "from": "nginx",
+      "to": "nginx",
+      "filter": ["**/*"]
+    },
+    {
+      "from": "server",
+      "to": "server",
+      "filter": ["**/*"]
+    }
+  ]
+},
+"extraResources": [
+  {
+    "from": "nginx",
+    "to": "nginx",
+    "filter": ["**/*"]
+  }
+]
+}
