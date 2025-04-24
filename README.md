@@ -1,4 +1,4 @@
-# Calculator App
+# Calculator App using Reverse proxy to run both server and client on same port
 
 
 A cross-platform desktop calculator application featuring:
